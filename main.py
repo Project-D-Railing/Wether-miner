@@ -33,9 +33,9 @@ for row in curA:
     deg = None
     if "deg" in wind:
         deg = wind['deg']
-    if "precipitation" in weather:
+    if "rain" in response:
         precipitation = response['rain']['3h']
-    if "snow" in wind:
+    if "snow" in response:
         snow = response['snow']['3h']
     plr = str(plz).zfill(5)[0:2]
     temp = "{0:.2f}".format(weather['temp'] - 273.15)
