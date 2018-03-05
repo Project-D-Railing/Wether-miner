@@ -34,9 +34,9 @@ for row in curA:
     if "deg" in wind:
         deg = wind['deg']
     if "precipitation" in weather:
-        deg = wind['deg']
-    if "deg" in wind:
-        deg = wind['deg']
+        precipitation = response['rain']['3h']
+    if "snow" in wind:
+        snow = response['snow']['3h']
     plr = str(plz).zfill(5)[0:2]
     temp = "{0:.2f}".format(weather['temp'] - 273.15)
     curB.execute(insert_new_entry,
