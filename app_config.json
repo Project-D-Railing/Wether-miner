@@ -1,0 +1,10 @@
+{
+  "key": "openweathermap-API-Key",
+  "configuration": {
+    "user": "root",
+    "password": "",
+    "host": "127.0.0.1",
+    "database": "DB-Name",
+    "raise_on_warnings": true
+  }
+}
