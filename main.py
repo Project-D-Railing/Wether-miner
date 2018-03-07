@@ -15,8 +15,10 @@ cny = mysql.connector.connect(**config)
 curA = cnx.cursor()
 curB = cny.cursor(buffered=True)
 curA.execute("SELECT * FROM `postleitregionen`")
-insert_new_entry = (
+insert_new_Weather_entry = (
     "INSERT INTO `weather` ( `PLR`, `Temp`, `Humidity`, `Wind_Speed`, `Wind_degr`, `precipitation`, `snow`, `air_pressure`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)")
+insert_new_Condition_entry = (
+    "INSERT INTO `weather-conditionList` (`ID`, `weatherID`, `ConditionID`) VALUES (NULL, %s, %s)")
 for row in curA:
     plz = row[1]
     if plz == 1:
@@ -26,11 +28,12 @@ for row in curA:
     r = requests.get(api_url)
     r.raise_for_status()
     response = r.json()
-    weather = response['main']
+    weather = response['weather']
+    mainweather = response['main']
     wind = response['wind']
+    deg = None
     precipitation = None
     snow = None
-    deg = None
     if "deg" in wind:
         deg = wind['deg']
     if "rain" in response:
@@ -38,9 +41,12 @@ for row in curA:
     if "snow" in response:
         snow = response['snow']['3h']
     plr = str(plz).zfill(5)[0:2]
-    temp = "{0:.2f}".format(weather['temp'] - 273.15)
-    curB.execute(insert_new_entry,
-                 (plr, temp, weather['humidity'], wind['speed'], deg, precipitation, snow, weather['pressure']))
+    temp = "{0:.2f}".format(mainweather['temp'] - 273.15)
+    curB.execute(insert_new_Weather_entry,
+                 (plr, temp, mainweather['humidity'], wind['speed'], deg, precipitation, snow, mainweather['pressure']))
+    ID = curB.getlastrowid()
+    for item in weather:
+        curB.execute(insert_new_Condition_entry, (ID, item['id']))
 curA.close()
 curB.close()
 cnx.commit()
