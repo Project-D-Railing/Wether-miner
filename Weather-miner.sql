@@ -154,7 +154,7 @@ CREATE TABLE `weather` (
   `precipitation` int(11) DEFAULT NULL,
   `snow` int(11) DEFAULT NULL,
   `air_pressure` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf16_german2_ci;
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE `weather-conditionList` (
 CREATE TABLE `weather-conditions` (
   `ID` int(11) NOT NULL,
   `WCondition` varchar(60) CHARACTER SET utf16 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf16_german2_ci;
 
 --
 -- Daten für Tabelle `weather-conditions`
